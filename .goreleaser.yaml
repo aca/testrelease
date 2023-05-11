@@ -30,5 +30,3 @@ brews:
     tap:
       owner: aca
       name: homebrew-tap
-    install: |
-      bin.install "testrelease"
