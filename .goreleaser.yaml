@@ -1,0 +1,34 @@
+before:
+  hooks:
+    - go test -v ./...
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - "7"
+    flags:
+    - -trimpath
+    ldflags:
+    - "-s -w -X main.version={{.Version}}"
+universal_binaries:
+  - replace: false
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+archives:
+  - format: binary
+brews:
+  - name: "testrelease"
+    tap:
+      owner: aca
+      name: homebrew-tap
+    install: |
+      bin.install "testrelease"
